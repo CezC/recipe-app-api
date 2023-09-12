@@ -1,0 +1,40 @@
+---
+# three --- indicate that this is yml file
+name: Checks
+
+# trigger any push of changes of our project when we push to github we will run this 
+on: [push]
+
+jobs:
+  # create new job with id test-lint
+  test-lint:
+    # human friendly name on github action interface
+    name: Test and Lint
+    # we run our job on ubuntu 20.04
+    # this runner shuld have already docker compose installed
+    runs-on: ubuntu-20.04
+    # steps things that will run on our job
+    # steps are in order first login then checkout ...
+    steps:
+      - name: Login to Docker Hub
+        # action is login action @v1 is version of this action
+        users: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # first we want to check our the code we want to acces the code make sure it is available      
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: docker compose run --rm app sh -c "python manage.py test"
+
+      - name: Lint
+        run: docker compose run --rm app sh -c "flake8"
+
+
+# if any of action fail then job that is running will fail
+
+
+

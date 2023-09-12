@@ -1,0 +1,38 @@
+version: "3.9"
+# version of yamal file
+
+# main block of docker compose file service needed for our app
+services: 
+  # name of our first servce is app
+  app:
+    # build docker file inside our current directory
+    build:
+      context: .
+      # create new arguement and set it to true
+      # overwrite false form Dockerfile
+      args:
+        - DEV=true
+    # ports tcp
+    ports:
+      - "8000:8000"
+    # map app folder form our directory to our /app folder in our container
+    volumes:
+      - ./app:/app
+    
+    # run our app service with this command
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+# it will build our docker image.
+# docker compose build
+
+# run flake 8 in our container
+# docker compose run --rm app sh -c "flake8"
+
+
+# create django project
+# docker compose run --rm app sh -c "django-admin startproject app ."
+
+
+# run project with docker compose
+# docker compose up

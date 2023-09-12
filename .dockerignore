@@ -1,0 +1,23 @@
+# Git 
+# git history can be big
+.git
+# .gitignore
+.gitignore
+
+# Docker
+# hidden docker file sometimes created
+.docker
+
+# Python
+#  python cache can create problems
+# dockerignore canr understand double astrisk so we add manually folders
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*/__pycache__/
+# python virtual environments
+.env/
+.venv/
+venv/
+
+
