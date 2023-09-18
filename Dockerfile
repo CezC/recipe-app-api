@@ -21,11 +21,20 @@ ARG DEV=false
 # add new django user to run django as nonroot
 RUN python -m venv /py && \
   /py/bin/pip install --upgrade pip && \
+  # install postgesql-client package in other our psycopg2 package to connect postgresql it will stay 
+  apk add --update --no-cache postgresql-client && \
+  # it groups packages in virutal deps we will then remove this group build-base, posggresql-dev and musl-dev
+  # those are needed to install psycopg2, psycopg2 we will put in requirements.txt
+  # then docker compose build to rebuild requirements.txt with psycop2 added
+  apk add --update --no-cache --virtual .tmp-build-deps \
+    build-base postgresql-dev musl-dev && \
   /py/bin/pip install -r /tmp/requirements.txt && \
   if [ $DEV = "true" ]; \
     then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
   fi && \
   rm -rf /tmp && \
+  # we remove our grouped packages thats are deps for installing psycopg2
+  apk del .tmp-build-deps && \
   adduser \
     --disabled-password \
     --no-create-home \
@@ -39,3 +48,6 @@ USER django-user
 
 # command to test build this image
 # docker build .
+
+
+# then docker compose build to rebuild requirements.txt with psycop2 added

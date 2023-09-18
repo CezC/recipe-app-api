@@ -22,7 +22,35 @@ services:
     # run our app service with this command
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    
+    environment:
+      # we use docker compose so we can use service name (db) as HOST name our app service (django) know
+      - DB_HOST=db
+      # the same as environamet variables for db
+      - POSTGRES_DB=devdb
+      - POSTGGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme      
+    
+    # wait for db first if db fail shut down app
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    # Db for local development 
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
 
+volumes:
+  # store named voulume in default location in our docker
+  dev-db-data:
+
+
+#           BEFORE DB
 # it will build our docker image.
 # docker compose build
 
@@ -35,4 +63,10 @@ services:
 
 
 # run project with docker compose
+# docker compose up
+
+
+
+#           AFTER DB 
+# we can just up our container
 # docker compose up
