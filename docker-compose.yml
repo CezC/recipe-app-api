@@ -70,3 +70,20 @@ volumes:
 #           AFTER DB 
 # we can just up our container
 # docker compose up
+
+# we create new app to add to it wait for postgresql service finnish to start we call this app core 
+# docker compose run --rm app sh -c "python manage.py startapp core"
+# in core app we delete 
+# tests.py
+# views.py - will not serve views it will store models
+# we create new dir
+# tests
+#   __init__.py
+
+# we open app/app/settings.py
+# we add our core app to  
+# INSTALLED_APPS = [
+#   ...
+# 'core',
+# ]
+# tomake sure it is installed in our project
