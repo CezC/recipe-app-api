@@ -27,9 +27,9 @@ services:
       # we use docker compose so we can use service name (db) as HOST name our app service (django) know
       - DB_HOST=db
       # the same as environamet variables for db
-      - POSTGRES_DB=devdb
-      - POSTGGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme      
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme      
     
     # wait for db first if db fail shut down app
     depends_on:

@@ -4,7 +4,7 @@ Test custom Django management commands.
 
 # patch in order to mock behaviour of db
 # to simulate responce from db
-from unittest.moc import patch
+from unittest.mock import patch
 
 # is posible error when we want to connect to db when it is not ready
 from psycopg2 import OperationalError as Psycopg2Error

@@ -6,7 +6,7 @@
 """
 Django scommand to wait for the database to be available.
 """
-from dhango.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
